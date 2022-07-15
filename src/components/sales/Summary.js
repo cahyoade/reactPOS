@@ -13,7 +13,7 @@ function Summary(props) {
             </div>
             <div className="flex justify-between items-center italic mb-1">
                 <p>Pembayaran</p>
-                <select onChange={e => props.changePayment(e.target.value)}>
+                <select value={props.payment} onChange={e => props.changePayment(e.target.value)} className="p-1">
                     <option value="cash">Cash</option>
                     <option value="poin">Poin</option>
                 </select>

@@ -11,7 +11,7 @@ function Cart(props) {
             </div>
             <div className='grow flex flex-col'>
                 <UserList title="Member" userData={props.userData} setUser={props.setUser} activeUser={props.user.name}/>
-                <Summary createTransaction={props.createTransaction} changePayment={props.changePayment} loadBon={props.loadBon} saveBon={props.saveBon} user={props.user} pointsAdded={props.pointsAdded} total={props.total} cash={props.cash} change={props.change} setCash={props.setCash}/>
+                <Summary createTransaction={props.createTransaction} changePayment={props.changePayment} loadBon={props.loadBon} saveBon={props.saveBon} user={props.user} pointsAdded={props.pointsAdded} total={props.total} cash={props.cash} change={props.change} setCash={props.setCash} payment={props.payment}/>
             </div>
         </div>
     );
