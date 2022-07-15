@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import Nav from './components/Nav'
+import Dashboard from './components/dashboard/Dashboard'
+import Sales from './components/sales/Sales'
+import Edit from './components/edit/Edit'
 
-function App() {
+import { useState } from 'react'
+
+export default function App() {
+  const [mode, setMode] = useState('edit');
+
+  function changeMode(mode) {
+    setMode(mode);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="text-neutral-600">
+      <Nav active={mode} changeMode={changeMode}></Nav>
+      {mode === 'sales' ? <Sales></Sales> : mode === 'dashboard' ? <Dashboard></Dashboard> : <Edit></Edit>}
     </div>
   );
 }
 
-export default App;
