@@ -19,10 +19,11 @@ function Sales() {
         date : '',
     });
 
-    console.log(transaction)
+    const pointsToRpRatio = 400;
 
     useEffect(() => localStorage.setItem('sales', JSON.stringify(transaction)), [transaction])
-    useEffect(calculateTotalProfitPointsAndChange, [transaction.products, transaction.cash, transaction.user]);
+    useEffect(calculateTotalProfitPointsAndChange, [transaction.products, transaction.cash, transaction.user, transaction.payment]);
+
     
     function addProductToCart(item){
         if(transaction.products.map(x => x.name).includes(item.name)){
@@ -51,6 +52,48 @@ function Sales() {
             }
         )
     }
+
+    function calculateTotalProfitPointsAndChange(){
+        if(transaction.payment === 'poin'){
+            setTransaction(prevTransaction => {
+                let total = 0;
+                let profit = 0;
+
+                prevTransaction.products.forEach(item => {
+                    let priceIndex;
+                    item.prices.forEach((i, idx) => {
+                        if(item.count >= i.min){
+                            priceIndex = idx
+                        }
+                    }) ;
+
+                    total += Math.ceil(item.prices[priceIndex].price * item.count / pointsToRpRatio);
+                })
+                const newTransaction = {...prevTransaction, profit : profit, total : total, change : transaction.user.points - total, pointsAdded : Math.floor(total/10000)};
+                return newTransaction;
+            });
+        }else{
+            setTransaction(prevTransaction => {
+                let total = 0;
+                let profit = 0;
+    
+                prevTransaction.products.forEach(item => {
+                    let priceIndex;
+                    item.prices.forEach((i, idx) => {
+                        if(item.count >= i.min){
+                            priceIndex = idx
+                        }
+                    }) ;
+    
+                    total += item.prices[priceIndex].price * item.count;
+                    profit += item.prices[priceIndex].profit * item.count;
+                })
+                const newTransaction = {...prevTransaction, profit : profit, total : total, change : transaction.cash - total, pointsAdded : Math.floor(total/10000)};
+                return newTransaction;
+            });
+        }
+    }
+
     function removeProductFromCart(item){
         setTransaction(prevTransaction => {
             let index;
@@ -61,28 +104,6 @@ function Sales() {
 
             return {...prevTransaction, products : newProducts};
         })
-    }
-
-    function calculateTotalProfitPointsAndChange(){
-        setTransaction(prevTransaction => {
-            let total = 0;
-            let profit = 0;
-
-            prevTransaction.products.forEach(item => {
-                let priceIndex;
-                item.prices.forEach((i, idx) => {
-                    if(item.count >= i.min){
-                        priceIndex = idx
-                    }
-                }) ;
-
-                total += item.prices[priceIndex].price * item.count;
-                profit += item.prices[priceIndex].profit * item.count;
-            })
-            const newTransaction = {...prevTransaction, profit : profit, total : total, change : transaction.cash - total, pointsAdded : Math.floor(total/10000)};
-            return newTransaction;
-        });
-
     }
 
     function setUser(user){
@@ -127,7 +148,7 @@ function Sales() {
         });
     }
 
-    function changePayment(method){
+    function setPayment(method){
         setTransaction(prevTransaction => {
             return {...prevTransaction, payment : method}
         })
@@ -138,7 +159,7 @@ function Sales() {
     return (
         <div className="px-16 py-6 flex">
             <ItemList itemData={itemData} addProductToCart={addProductToCart}/>
-            <Cart {...transaction} userData={userData} changePayment={changePayment} changeItemCount={changeItemCount} removeProductFromCart={removeProductFromCart} setUser={setUser} setCash={setCash} createTransaction={createTransaction}/>
+            <Cart {...transaction} userData={userData} setPayment={setPayment} changeItemCount={changeItemCount} removeProductFromCart={removeProductFromCart} setUser={setUser} setCash={setCash} createTransaction={createTransaction}/>
         </div>
     );
 }

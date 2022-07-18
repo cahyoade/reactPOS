@@ -13,7 +13,7 @@ function ItemAndMemberList(props) {
             <input placeholder='cari' className='w-full h-[40px] px-[10px] rounded-lg bg-neutral-100 border border-solid border-neutral-300 placeholder:italic placeholder:text-sm mb-[12px]' onChange={e => setKeyword(e.target.value)}></input>
             <div className='overflow-y-scroll grow'>
                 {displayedItems.map((x, id) => {
-                    return x.prices ? <Item {...x} key={id} startDeleteSequence={props.startDeleteSequence}/> : <User {...x} key={id} startDeleteSequence={props.startDeleteSequence}/>
+                    return x.prices ? <Item {...x} setActiveItem={props.setActiveItem} key={id} startDeleteSequence={props.startDeleteSequence}/> : <User {...x} key={id} setActiveUser={props.setActiveUser} startDeleteSequence={props.startDeleteSequence}/>
                 })}
             </div>
         </div>

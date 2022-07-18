@@ -3,9 +3,11 @@ import delIcon from '../../images/delete.png'
 function User(props) {
     let userData = {...props}
     delete userData.startDeleteSequence;
+    delete userData.setActiveUser;
+    
     return ( 
         <div className='flex justify-between items-center p-2 border-b-2'>
-            <div className='text-sm'>
+            <div className='text-sm' onClick={() => props.setActiveUser(userData)}>
                 <p>{props.name}</p>
                 <p className='italic'>{props.points} poin</p>
             </div>
