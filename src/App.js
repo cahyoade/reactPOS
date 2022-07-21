@@ -6,7 +6,7 @@ import Edit from './components/edit/Edit'
 import { useState } from 'react'
 
 export default function App() {
-  const [mode, setMode] = useState('edit');
+  const [mode, setMode] = useState('dashboard');
 
   function changeMode(mode) {
     setMode(mode);

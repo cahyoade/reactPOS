@@ -18,8 +18,10 @@ function Sales() {
         products : [],
         date : '',
     });
-
-    const pointsToRpRatio = 400;
+    
+    console.log(transaction);
+    
+    const pointsToRpRatio = 200;
 
     useEffect(() => localStorage.setItem('sales', JSON.stringify(transaction)), [transaction])
     useEffect(calculateTotalProfitPointsAndChange, [transaction.products, transaction.cash, transaction.user, transaction.payment]);

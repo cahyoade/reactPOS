@@ -18,12 +18,10 @@ function Edit() {
         id : '',
         name : '',
         unit : '',
-        prices : [],
+        prices : [{price : '', profit : '', min : ''}],
         count : 1,
         lastEdit : ''
     });
-
-    console.log(item);
 
     function startDeleteSequence(item){
         setShowModal(true);
@@ -66,10 +64,33 @@ function Edit() {
             id : '',
             name : '',
             unit : '',
-            prices : [],
+            prices : [{price : '', profit : '', min : ''}],
             count : 1,
             lastEdit : ''
         })
+    }
+
+    function handlePricesChange(event, index){
+        const {name, value} = event.target;
+        setItem(prevItem => {
+            const newItemPrices = [...prevItem.prices];
+            newItemPrices[index][name] = +value;
+            return {...prevItem, prices : newItemPrices};
+        })
+    }
+
+    function addPrice(){
+        setItem( prevItem => {
+            return {...prevItem, prices : [...prevItem.prices, {price : '', profit : '', min : ''}]}
+        })
+    }
+
+    function delPrice(index){
+        setItem(prevItem => {
+            const newItemPrices = [...prevItem.prices];
+            newItemPrices.splice(index, 1);
+            return {...prevItem, prices : newItemPrices};
+        });
     }
 
     function handleUserChange(e){
@@ -85,7 +106,7 @@ function Edit() {
     return (
         <div className="px-16 py-6 flex justify-between">
             <ItemAndMemberList data={[...itemData, ...userData]} startDeleteSequence={startDeleteSequence} setActiveItem={setActiveItem} setActiveUser={setActiveUser}/>
-            <Form user={user} item={item} handleUserChange={handleUserChange} handleItemChange={handleItemChange} resetItem={resetItem} resetUser={resetUser}/>
+            <Form user={user} item={item} handleUserChange={handleUserChange} handleItemChange={handleItemChange} handlePricesChange={handlePricesChange} addPrice={addPrice} delPrice={delPrice} resetItem={resetItem} resetUser={resetUser}/>
             {showModal && <ConfirmModal delete={true} text={`Hapus ${del} "${del === 'member' ? user.name : item.name}" ?`} positiveText='hapus' negativeText='cancel' positive={delItem} negative={cancelDelItem}/>}
         </div>
     );
