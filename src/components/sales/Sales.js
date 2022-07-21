@@ -19,8 +19,6 @@ function Sales() {
         date : '',
     });
     
-    console.log(transaction);
-    
     const pointsToRpRatio = 200;
 
     useEffect(() => localStorage.setItem('sales', JSON.stringify(transaction)), [transaction])

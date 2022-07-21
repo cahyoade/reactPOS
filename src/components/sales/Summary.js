@@ -1,7 +1,7 @@
 function Summary(props) {
     const formatter = new Intl.NumberFormat('id');
     return ( 
-        <div className={`w-full  p-4 rounded-xl shadow-md border border-solid border-neutral-200 flex flex-col`}>
+        <div className={`w-full p-4 rounded-xl shadow-md border border-solid border-neutral-200 flex flex-col`}>
             <p className='mb-3 pb-1 text-lg'>Ringkasan</p>
             <div className="flex justify-between items-center italic mb-1">
                 <p>Member</p>

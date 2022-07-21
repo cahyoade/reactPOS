@@ -26,7 +26,7 @@ function DataChart(props) {
     const month = currentTime.getMonth();
     const year = currentTime.getFullYear();
     const labels = {date : [], string : []};
-    const transactionsData = {profit : [], sales : []};
+    const transactionsData = {profit : new Array(currentTime.getDate()).fill(0), sales : new Array(currentTime.getDate()).fill(0)};
     const formatter = new Intl.NumberFormat('id').format
 
     for(let i = 1; i <= currentTime.getDate(); i++){
@@ -34,22 +34,12 @@ function DataChart(props) {
         labels.string.push(`${i}/${month + 1}/${year}`);
     }
 
-    labels.date.forEach((date, index) => {
-        let profit = 0;
-        let sales = 0;
+    props.transactionsData.forEach(transaction => {
+        const index = transaction.date.getDate() - 1;
 
-        props.transactionsData.forEach(transaction => {
-            if(transaction.date > date && transaction.date < new Date(new Date(date).setDate(index + 2))){
-                profit += transaction.profit;
-                sales += transaction.total;
-            }
-        });
-
-        transactionsData.profit.push(profit);
-        transactionsData.sales.push(sales);
-    });
-
-    console.log(transactionsData)
+        transactionsData.sales[index] += transaction.total;
+        transactionsData.profit[index] += transaction.profit;
+    })
 
     const chartData = {
         labels : labels.string,
@@ -71,20 +61,10 @@ function DataChart(props) {
 
     const chartOptions = {
         aspectRatio : 2.5,
-        plugins: {
-            title: {
-              display: true,
-              text: 'Penjualan dan keuntungan bulan ini',
-              font: {
-                size: 24,
-                family: 'rubik'
-              }
-            },
-        },
         scales : {
             yAxes : {
                 min : 0,
-                max : Math.max(...transactionsData.sales) * 1.3,
+                max : Math.ceil(Math.max(...transactionsData.sales) * 1.3),
                 ticks : {
                     callback : function(value, index, ticks){
                         return 'Rp' + formatter(value);
@@ -95,7 +75,8 @@ function DataChart(props) {
     }
 
     return (
-        <div className='p-8 rounded-xl shadow-xl border border-solid border-neutral-300'>
+        <div className='px-12 py-8 rounded-xl shadow-xl border border-solid border-neutral-300 mb-8'>
+            <p className='text-2xl mb-8'>Keuntungan dan penjualan bulan ini</p>
             <Line
                 data={chartData}
                 options={chartOptions}

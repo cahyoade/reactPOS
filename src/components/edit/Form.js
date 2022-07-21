@@ -17,9 +17,9 @@ function Form(props) {
                     </div>
                 )})}
                 <div className='flex justify-end'>
-                    <button className='rounded-md px-2 py-1 shadow-md mr-3 bg-neutral-100' onClick={e => props.addPrice()}>Tambah Harga</button>
-                    <button className='rounded-md px-2 py-1 shadow-md mr-3 bg-mainRed text-white' onClick={() => props.resetItem()}>Cancel</button>
-                    <button className='rounded-md px-2 py-1 shadow-md bg-mainBlue text-white'>{props.item.id === '' ? 'buat barang' : 'simpan'}</button>
+                    <button className='rounded-md px-2 py-1 shadow-md mr-3 bg-neutral-100 text-sm' onClick={e => props.addPrice()}>Tambah Harga</button>
+                    <button className='rounded-md px-2 py-1 shadow-md mr-3 bg-mainRed text-white text-sm' onClick={() => props.resetItem()}>Cancel</button>
+                    <button className='rounded-md px-2 py-1 shadow-md bg-mainBlue text-white text-sm'>{props.item.id === '' ? 'buat barang' : 'simpan'}</button>
                 </div>
             </div>
             <div>
@@ -28,8 +28,8 @@ function Form(props) {
                 <input placeholder='point' value={props.user.points} onChange={props.handleUserChange} name='points' className='w-full h-[40px] px-[10px] rounded-lg bg-neutral-100 border border-solid border-neutral-300 placeholder:italic placeholder:text-sm mb-[12px]'></input>
                 <input placeholder='no. telp' value={props.user.phone} onChange={props.handleUserChange} name='phone' className='w-full h-[40px] px-[10px] rounded-lg bg-neutral-100 border border-solid border-neutral-300 placeholder:italic placeholder:text-sm mb-[12px]'></input>
                 <div className='flex justify-end'>
-                    <button className='rounded-md px-2 py-1 shadow-md mr-3 bg-mainRed text-white' onClick={() => props.resetUser()}>Cancel</button>
-                    <button className='rounded-md px-2 py-1 shadow-md bg-mainBlue text-white'>{props.user.id === '' ? 'buat member' : 'simpan'}</button>
+                    <button className='rounded-md px-2 py-1 shadow-md mr-3 bg-mainRed text-white text-sm' onClick={() => props.resetUser()}>Cancel</button>
+                    <button className='rounded-md px-2 py-1 shadow-md bg-mainBlue text-white text-sm'>{props.user.id === '' ? 'buat member' : 'simpan'}</button>
                 </div>
             </div>
         </div>

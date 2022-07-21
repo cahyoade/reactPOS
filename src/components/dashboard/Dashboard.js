@@ -1,6 +1,7 @@
 import transactionsData from '../../sampledata/transactions'
 import Card from './Card';
 import DataChart from './DataChart';
+import TransactionList from './TransactionList';
 
 function Dashboard() {
     const formatter = new Intl.NumberFormat('id').format
@@ -15,11 +16,11 @@ function Dashboard() {
     const currentMonth = new Date(currentDate.getTime()).setDate(0);
 
     transactionsData.forEach(transaction => {
-        if(transaction.date > currentMonth){
+        if(transaction.date >= currentMonth){
             thisMonthProfit += transaction.profit;
             thisMonthSales += transaction.total;
             
-            if(transaction.date > currentDate){
+            if(transaction.date >= currentDate){
                 todayProfit += transaction.profit;
                 todaySales += transaction.total;
             }
@@ -35,6 +36,7 @@ function Dashboard() {
                 <Card title='Keuntungan bulan ini' content={`Rp${formatter(thisMonthProfit)}`}/>
             </div>
             <DataChart transactionsData={transactionsData}/>
+            <TransactionList transactionsData={transactionsData}/>
         </div>
     );
 }
