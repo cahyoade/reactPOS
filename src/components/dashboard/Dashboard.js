@@ -1,13 +1,23 @@
-import transactionsData from '../../sampledata/transactions'
 import Card from './Card';
 import DataChart from './DataChart';
 import TransactionList from './TransactionList';
+import React, { useState, useEffect } from 'react';
+import constants from '../../constants';
+
 
 function Dashboard() {
-    const formatter = new Intl.NumberFormat('id').format
+    const formatter = new Intl.NumberFormat('id').format;
+    const [transactionsData, setTransactionsData] = useState([]);
 
     let todaySales = 0, todayProfit = 0, thisMonthSales = 0, thisMonthProfit = 0;
 
+    useEffect(getData, [])
+
+    function getData(){
+        fetch(constants.apiUrl + '/transactions')
+        .then(res => res.json())
+        .then(data => setTransactionsData(data))
+    }
     const currentDate = new Date();
     currentDate.setHours(0);
     currentDate.setMinutes(0);
@@ -16,11 +26,11 @@ function Dashboard() {
     const currentMonth = new Date(currentDate.getTime()).setDate(0);
 
     transactionsData.forEach(transaction => {
-        if(transaction.date >= currentMonth){
+        if(new Date(transaction.date) >= currentMonth){
             thisMonthProfit += transaction.profit;
             thisMonthSales += transaction.total;
             
-            if(transaction.date >= currentDate){
+            if(new Date(transaction.date) >= currentDate){
                 todayProfit += transaction.profit;
                 todaySales += transaction.total;
             }
@@ -35,7 +45,7 @@ function Dashboard() {
                 <Card title='Penjualan bulan ini' content={`Rp${formatter(thisMonthSales)}`}/>
                 <Card title='Keuntungan bulan ini' content={`Rp${formatter(thisMonthProfit)}`}/>
             </div>
-            <DataChart transactionsData={transactionsData}/>
+            {transactionsData.length > 0 && <DataChart transactionsData={transactionsData}/>}
             <TransactionList transactionsData={transactionsData}/>
         </div>
     );

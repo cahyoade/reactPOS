@@ -35,7 +35,7 @@ function DataChart(props) {
     }
 
     props.transactionsData.forEach(transaction => {
-        const index = transaction.date.getDate() - 1;
+        const index = new Date(transaction.date).getDate() - 1;
 
         transactionsData.sales[index] += transaction.total;
         transactionsData.profit[index] += transaction.profit;

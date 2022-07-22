@@ -1,7 +1,6 @@
 import ItemList from "./ItemList";
-import itemData from "../../sampledata/products";
-import userData from "../../sampledata/users";
 import Cart from "./Cart";
+import constants from '../../constants';
 import React, { useState, useEffect } from 'react';
 
 
@@ -18,12 +17,23 @@ function Sales() {
         products : [],
         date : '',
     });
+
+    const [itemData, setItemData] = useState('');
+    const [userData, setUserData] = useState('');
     
-    const pointsToRpRatio = 200;
+    useEffect(getData, [])
 
     useEffect(() => localStorage.setItem('sales', JSON.stringify(transaction)), [transaction])
     useEffect(calculateTotalProfitPointsAndChange, [transaction.products, transaction.cash, transaction.user, transaction.payment]);
 
+    function getData(){
+        fetch(`${constants.apiUrl}/members`)
+        .then(res => res.json())
+        .then(data => setUserData(data));
+        fetch(`${constants.apiUrl}/products`)
+        .then(res => res.json())
+        .then(data => setItemData(data))
+    }
     
     function addProductToCart(item){
         if(transaction.products.map(x => x.name).includes(item.name)){
@@ -67,9 +77,9 @@ function Sales() {
                         }
                     }) ;
 
-                    total += Math.ceil(item.prices[priceIndex].price * item.count / pointsToRpRatio);
+                    total += Math.ceil(item.prices[priceIndex].price * item.count / constants.pointsToCashRatio);
                 })
-                const newTransaction = {...prevTransaction, profit : profit, total : total, change : transaction.user.points - total, pointsAdded : Math.floor(total/10000)};
+                const newTransaction = {...prevTransaction, profit : profit, total : total, change : transaction.user.points - total, pointsAdded : Math.floor(total/constants.cashToPointRatio)};
                 return newTransaction;
             });
         }else{
@@ -88,7 +98,7 @@ function Sales() {
                     total += item.prices[priceIndex].price * item.count;
                     profit += item.prices[priceIndex].profit * item.count;
                 })
-                const newTransaction = {...prevTransaction, profit : profit, total : total, change : transaction.cash - total, pointsAdded : Math.floor(total/10000)};
+                const newTransaction = {...prevTransaction, profit : profit, total : total, change : transaction.cash - total, pointsAdded : Math.floor(total/constants.pointsToCashRatio)};
                 return newTransaction;
             });
         }
