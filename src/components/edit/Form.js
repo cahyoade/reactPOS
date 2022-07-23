@@ -24,7 +24,7 @@ function Form(props) {
             <div>
                 <p className='text-2xl mb-4'>{props.user._id ? 'Edit Data' : 'Tambah' } Member</p>
                 <input placeholder='nama' value={props.user.name} onChange={props.handleUserChange} name='name' className='w-full h-[40px] px-[10px] rounded-lg bg-neutral-100 border border-solid border-neutral-300 placeholder:italic placeholder:text-sm mb-[12px]'></input>
-                <input placeholder='point' value={props.user.points} onChange={props.handleUserChange} name='points' className='w-full h-[40px] px-[10px] rounded-lg bg-neutral-100 border border-solid border-neutral-300 placeholder:italic placeholder:text-sm mb-[12px]'></input>
+                <input type='number' placeholder='point' value={props.user.points} onChange={props.handleUserChange} name='points' className='w-full h-[40px] px-[10px] rounded-lg bg-neutral-100 border border-solid border-neutral-300 placeholder:italic placeholder:text-sm mb-[12px]'></input>
                 <input placeholder='no. telp' value={props.user.phone} onChange={props.handleUserChange} name='phone' className='w-full h-[40px] px-[10px] rounded-lg bg-neutral-100 border border-solid border-neutral-300 placeholder:italic placeholder:text-sm mb-[12px]'></input>
                 <div className='flex justify-end'>
                     <button className='rounded-md px-2 py-1 shadow-md mr-3 bg-mainRed text-white text-sm' onClick={() => props.resetUser()}>Cancel</button>

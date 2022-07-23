@@ -11,7 +11,7 @@ function Transaction(props) {
         <div className='shadow-lg rounded-xl w-full p-6 mb-4 border-[1px] '>
             <div className="grid grid-cols-6 items-center">
                 <p>{props.user.name}</p>
-                <p>Rp{formatter(props.total)}</p>
+                <p>{props.payment === 'cash' ? `Rp${formatter(props.total)}` : `${formatter(props.total)} Poin`}</p>
                 <p>Rp{formatter(props.profit)}</p>
                 <p className='truncate mr-8'>{productsText}</p>
                 <p>{new Date(props.date).toLocaleString('fr')}</p>

@@ -22,25 +22,31 @@ ChartJS.register(
 )
 
 function DataChart(props) {
+    props.transactionsData.sort((a, b) => new Date(b.date)-new Date(a.date));
     const currentTime = new Date();
     const month = currentTime.getMonth();
     const year = currentTime.getFullYear();
     const labels = {date : [], string : []};
-    const transactionsData = {profit : new Array(currentTime.getDate()).fill(0), sales : new Array(currentTime.getDate()).fill(0)};
-    const formatter = new Intl.NumberFormat('id').format
+    const transactionsData = {profit : new Array(31).fill(0), sales : new Array(31).fill(0)};
+    const formatter = new Intl.NumberFormat('id').format;
+    let monthBefore = new Date(currentTime.getTime() - 1000 * 60 * 60 * 24 * 30)
 
-    for(let i = 1; i <= currentTime.getDate(); i++){
-        labels.date.push(new Date(year, month, i));
-        labels.string.push(`${i}/${month + 1}/${year}`);
+    while(monthBefore <= currentTime){
+        labels.date.push(monthBefore);
+        labels.string.push(`${monthBefore.getDate()}/${monthBefore.getMonth() + 1}/${year}`);
+        monthBefore = new Date(monthBefore.getTime() + 1000 * 60 * 60 * 24);
     }
 
-    props.transactionsData.forEach(transaction => {
-        const index = new Date(transaction.date).getDate() - 1;
-
+    props.transactionsData.slice(0, 30).forEach(transaction => {
+        let index;
+        labels.date.forEach((date, idx) => {new Date(transaction.date).getDate() === date.getDate() ? index = idx : index = index});
+        
         transactionsData.sales[index] += transaction.total;
         transactionsData.profit[index] += transaction.profit;
     })
-
+    
+    console.log(transactionsData);
+    console.log(labels.string);
     const chartData = {
         labels : labels.string,
         datasets: [

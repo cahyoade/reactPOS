@@ -7,7 +7,7 @@ import React, { useState, useEffect } from 'react';
 
 function Sales() {
     const [transaction, setTransaction] = useState(JSON.parse(localStorage.getItem('sales')) || {
-        user : {bon:[]},
+        user : {},
         total : 0,
         cash : 0,
         payment : 'cash',
@@ -17,6 +17,8 @@ function Sales() {
         products : [],
         date : '',
     });
+
+    console.log(transaction);
 
     const [itemData, setItemData] = useState('');
     const [userData, setUserData] = useState('');
@@ -79,7 +81,7 @@ function Sales() {
 
                     total += Math.ceil(item.prices[priceIndex].price * item.count / constants.pointsToCashRatio);
                 })
-                const newTransaction = {...prevTransaction, profit : profit, total : total, change : transaction.user.points - total, pointsAdded : Math.floor(total/constants.cashToPointRatio)};
+                const newTransaction = {...prevTransaction, profit : profit, total : total, change : transaction.user.points - total, pointsAdded : 0};
                 return newTransaction;
             });
         }else{
@@ -98,7 +100,7 @@ function Sales() {
                     total += item.prices[priceIndex].price * item.count;
                     profit += item.prices[priceIndex].profit * item.count;
                 })
-                const newTransaction = {...prevTransaction, profit : profit, total : total, change : transaction.cash - total, pointsAdded : Math.floor(total/constants.pointsToCashRatio)};
+                const newTransaction = {...prevTransaction, profit : profit, total : total, change : transaction.cash - total, pointsAdded : Math.floor(total/constants.cashToPointRatio)};
                 return newTransaction;
             });
         }
@@ -144,18 +146,33 @@ function Sales() {
             window.alert('Transaksi Kosong')
             return
         }
-        //todo
-        console.log('transaction created')
-        setTransaction({
-            user : '',
-            total : 0,
-            cash : 0,
-            change : 0,
-            pointsAdded : 0,
-            profit : 0,
-            products : [],
-            date : '',
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(transaction)
+        };
+
+        fetch(`${constants.apiUrl}/transactions`, options)
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .then(() => {
+            getData();
+            window.alert('transaksi berhasil');
+            setTransaction({
+                user : {},
+                total : 0,
+                cash : 0,
+                payment : 'cash',
+                change : 0,
+                pointsAdded : 0,
+                profit : 0,
+                products : [],
+                date : '',
+            });
         });
+
     }
 
     function setPayment(method){

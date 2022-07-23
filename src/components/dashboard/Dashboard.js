@@ -26,7 +26,7 @@ function Dashboard() {
     const currentMonth = new Date(currentDate.getTime()).setDate(0);
 
     transactionsData.forEach(transaction => {
-        if(new Date(transaction.date) >= currentMonth){
+        if(new Date(transaction.date) >= currentMonth && transaction.payment === 'cash'){
             thisMonthProfit += transaction.profit;
             thisMonthSales += transaction.total;
             
@@ -45,7 +45,7 @@ function Dashboard() {
                 <Card title='Penjualan bulan ini' content={`Rp${formatter(thisMonthSales)}`}/>
                 <Card title='Keuntungan bulan ini' content={`Rp${formatter(thisMonthProfit)}`}/>
             </div>
-            {transactionsData.length > 0 && <DataChart transactionsData={transactionsData}/>}
+            {transactionsData.length > 0 && <DataChart transactionsData={transactionsData.slice(-30)}/>}
             <TransactionList transactionsData={transactionsData}/>
         </div>
     );

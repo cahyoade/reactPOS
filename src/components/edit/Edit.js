@@ -17,11 +17,11 @@ function Edit() {
     const [item, setItem] = useState({
         name : '',
         unit : '',
-        prices : [{price : '', profit : '', min : ''}],
+        prices : [{price : '', profit : '', min : 0}],
         count : 1,
         lastEdit : ''
     });
-    console.log(user);
+
     useEffect(getData, []);
 
     function getData(){
@@ -105,7 +105,7 @@ function Edit() {
         setItem(item);
     }
     function setActiveUser(user){
-        setUser(user);
+        setUser({...user, points : +user.points});
     }
 
     function resetUser(){
@@ -150,8 +150,12 @@ function Edit() {
     }
 
     function handleUserChange(e){
-        const {value, name} = e.target; 
-        setUser(prevUser => {return {...prevUser, [name] : value}});
+        const {value, name} = e.target;
+        if(name === 'points'){
+            setUser(prevUser => {return {...prevUser, [name] : +value}});    
+        }else{
+            setUser(prevUser => {return {...prevUser, [name] : value}});
+        }
     }
 
     function handleItemChange(e){
