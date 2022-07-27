@@ -4,7 +4,6 @@ const cors = require('cors');
 const { MongoClient, ObjectId } = require('mongodb');
 const { exec } = require('child_process');
 const fs = require('fs');
-const { Stream } = require('stream');
  
 const app = express();
 app.use(cors({origin : 'http://localhost:3000'}));
@@ -108,7 +107,6 @@ function printTransaction(transaction){
 	let formatter = new Intl.NumberFormat('id').format; 
 	let textFile = fs.createWriteStream('./print.txt');
 	textFile.once('open', () => {
-
 		let header = 'Warung Mbak Sum'.padStart(20, ' ');
 		textFile.write(header.padEnd(25, ' '));
 		textFile.write(`\n\nTgl :${new Date(transaction.date).toLocaleString('nl').padStart(20, ' ')}\n`)
@@ -140,14 +138,18 @@ function printTransaction(transaction){
 
 
 		if(transaction.user.name === 'umum'){
+			textFile.write('Mohon periksa kembalian sebelum meninggalkan kasir, tidak menerima komplain setelah meninggalkan kasir.');
 			textFile.end();
 			return;
 		}
+
 		textFile.write(`Member :` + `${transaction.user.name}`.padStart(17, ' '));
 		textFile.write('\nPoin          :' + `${formatter(transaction.user.points)}`.padStart(10, ' '));
 		textFile.write('\nTambahan Poin :' + `${formatter(transaction.pointsAdded)}`.padStart(10, ' '));
 		textFile.write('\nPoin Sekarang :' + `${formatter(transaction.user.points + transaction.pointsAdded)}`.padStart(10, ' '));
+		textFile.write('\nPembelian gas dan rokok tidak mendapatkan poin'.padStart(25, ' '));
+		textFile.write('\n\nMohon periksa kembalian sebelum meninggalkan kasir, tidak menerima komplain setelah meninggalkan kasir.');
 		textFile.end();
 	})
-	exec(`notepad /p ${process.cwd()}\\print.txt`);
+	//exec(`notepad /p ${process.cwd()}\\print.txt`);
 }

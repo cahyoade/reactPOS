@@ -86,7 +86,8 @@ function Sales() {
             setTransaction(prevTransaction => {
                 let total = 0;
                 let profit = 0;
-    
+                let totalForPointsCalculation = 0;
+
                 prevTransaction.products.forEach(item => {
                     let priceIndex;
                     item.prices.forEach((i, idx) => {
@@ -94,11 +95,14 @@ function Sales() {
                             priceIndex = idx
                         }
                     }) ;
-    
+                    
                     total += item.prices[priceIndex].price * item.count;
                     profit += item.prices[priceIndex].profit * item.count;
+                    if(item.eligibleForPoints){
+                        totalForPointsCalculation += item.prices[priceIndex].price * item.count;
+                    }
                 })
-                const newTransaction = {...prevTransaction, profit : profit, total : total, change : transaction.cash - total, pointsAdded : Math.floor(total/constants.cashToPointRatio)};
+                const newTransaction = {...prevTransaction, profit : profit, total : total, change : transaction.cash - total, pointsAdded : Math.floor(totalForPointsCalculation/constants.cashToPointRatio)};
                 return newTransaction;
             });
         }

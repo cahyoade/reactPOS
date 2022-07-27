@@ -10,8 +10,8 @@
 /coverage
 
 # production
-/backend/build
 /backend/print.txt
+./print.txt
 
 # misc
 .DS_Store

@@ -7,6 +7,8 @@ function Form(props) {
                 <p className='mb-4 text-2xl'>{props.item._id ? 'Edit Data' : 'Tambah' } Barang</p>
                 <input value={props.item.name} placeholder='nama' name='name' onChange={props.handleItemChange} className='w-full h-[40px] px-[10px] rounded-lg bg-neutral-100 border border-solid border-neutral-300 placeholder:italic placeholder:text-sm mb-3'></input>
                 <input value={props.item.unit} placeholder='satuan' name='unit' onChange={props.handleItemChange} className='w-full h-[40px] px-[10px] rounded-lg bg-neutral-100 border border-solid border-neutral-300 placeholder:italic placeholder:text-sm mb-3'></input>
+                <input type='checkbox' className='mb-3' id='eligibleForPoints' checked={props.item.eligibleForPoints} name='eligibleForPoints' onChange={props.handleItemChange}></input>
+                <label className='ml-2 mb-3' htmlFor="eligibleForPoints">Dapat poin?</label>
                 {props.item.prices.map((price, index) => {return (
                     <div className='flex items-center mb-3' key={index}>
                         <input type='number' placeholder='harga' name='price' value={price.price} onChange={e => props.handlePricesChange(e, index)} className='mr-2 w-full h-[40px] px-[10px] rounded-lg bg-neutral-100 border border-solid border-neutral-300 placeholder:italic placeholder:text-sm '></input>

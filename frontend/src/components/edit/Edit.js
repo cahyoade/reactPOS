@@ -18,6 +18,7 @@ function Edit() {
         name : '',
         unit : '',
         prices : [{price : '', profit : '', min : 0}],
+        eligibleForPoints : true,
         count : 1,
         lastEdit : ''
     });
@@ -159,8 +160,8 @@ function Edit() {
     }
 
     function handleItemChange(e){
-        const {value, name} = e.target;
-        setItem(prevItem => {return {...prevItem, [name] : value}})
+        const {value, name, type, checked} = e.target;
+        setItem(prevItem => {return {...prevItem, [name] : type === 'checkbox' ? checked : value}})
     }
 
     return (
