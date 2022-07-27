@@ -12,7 +12,7 @@ function User(props) {
                 <p>{props.name}</p>
                 <p className='italic'>{props.points} poin</p>
             </div>
-            <img alt='checkBox' src={props.active ? checked : unChecked} className='w-5 cursor-pointer' onClick={() => props.active ? props.setUser({bon : []}) : props.setUser(userData)}></img>
+            <img alt='checkBox' src={props.active ? checked : unChecked} className='w-5 cursor-pointer' onClick={() => props.active ? props.setUser({}) : props.setUser(userData)}></img>
         </div>
     );
 }
