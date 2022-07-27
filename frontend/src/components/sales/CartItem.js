@@ -12,7 +12,7 @@ function CartItem(props) {
 
     return ( 
         <div className='grid grid-cols-4 items-center w-full py-2 border-b-2'>
-            <div>
+            <div className='pr-2'>
                 <p>{props.name}</p>
                 <p className='italic text-base'>Rp{formatter(props.prices[priceIndex].price)}</p>
             </div>

@@ -4,8 +4,8 @@ import CartItem from './CartItem';
 
 function Cart(props) {
     return ( 
-        <div className='w-7/12 ml-[46px] grow p-6 rounded-xl shadow-xl border border-solid border-neutral-300 flex'>
-            <div className='w-9/12 mr-6'>
+        <div className='w-7/12 h-[620px] ml-12 grow p-6 rounded-xl shadow-xl border border-solid border-neutral-300 flex'>
+            <div className='w-9/12 mr-6 pr-4 overflow-y-scroll'>
                 <h1 className='mb-4 text-2xl'>Keranjang</h1>
                 {props.products.map((x, idx) => <CartItem removeProductFromCart={props.removeProductFromCart} changeItemCount={props.changeItemCount} key={idx} {...x}/>)}
             </div>

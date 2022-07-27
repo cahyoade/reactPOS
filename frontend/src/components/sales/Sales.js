@@ -18,8 +18,6 @@ function Sales() {
         date : '',
     });
 
-    console.log(transaction);
-
     const [itemData, setItemData] = useState('');
     const [userData, setUserData] = useState('');
     
