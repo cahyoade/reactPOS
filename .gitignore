@@ -11,6 +11,7 @@
 
 # production
 /backend/build
+/backend/print.txt
 
 # misc
 .DS_Store
