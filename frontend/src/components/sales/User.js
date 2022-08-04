@@ -7,7 +7,7 @@ function User(props) {
     delete userData.setUser;
 
     return ( 
-        <div className='flex cursor-pointer justify-between items-center p-2 border-b-2' onClick={() => props.active ? props.setUser({}) : props.setUser(userData)}>
+        <div className='flex cursor-pointer justify-between items-center p-2 border-b-2 hover:bg-slate-200' onClick={() => props.active ? props.setUser({}) : props.setUser(userData)}>
             <div className='text-xs'>
                 <p>{props.name}</p>
                 <p className='italic'>{props.points} poin</p>

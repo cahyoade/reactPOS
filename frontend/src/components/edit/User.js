@@ -6,7 +6,7 @@ function User(props) {
     delete userData.setActiveUser;
     
     return ( 
-        <div className='flex justify-between items-center p-2 border-b-2'>
+        <div className='flex justify-between items-center p-2 border-b-2 hover:bg-slate-200'>
             <div className='text-sm cursor-pointer' onClick={() => props.setActiveUser(userData)}>
                 <p>{props.name}</p>
                 <p className='italic'>{props.points} poin</p>

@@ -151,5 +151,5 @@ function printTransaction(transaction){
 		textFile.write('\n\nMohon periksa kembalian sebelum meninggalkan kasir, tidak menerima komplain setelah meninggalkan kasir.');
 		textFile.end();
 	})
-	//exec(`notepad /p ${process.cwd()}\\print.txt`);
+	// exec(`notepad /p ${process.cwd()}\\print.txt`);
 }
